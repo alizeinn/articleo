@@ -1,0 +1,33 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+  functions = "netlify/functions"  # Add this line
+
+[functions]
+  node_bundler = "esbuild"        # Add this section
+  directory = "netlify/functions"
+
+# Specific SDK endpoint redirects
+[[redirects]]
+  from = "/api/sdk/health"
+  to = "/.netlify/functions/sdk-health"
+  status = 200
+  force = true                    # Add force=true
+
+[[redirects]]
+  from = "/api/sdk/sdk.js"
+  to = "/.netlify/functions/sdk-js"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/sdk/version"
+  to = "/.netlify/functions/sdk-version"
+  status = 200
+  force = true
+
+# Handle client-side routing (keep this last)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
